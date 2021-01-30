@@ -7,9 +7,14 @@ export interface Entry_Payload {
 }
 
 export interface Logs extends Document {
-    id: string,
+    _id: string,
     amount: number,
     paid_By: string,
     description: string,
     currentTime: Date
+}
+
+export interface Audit extends Document {
+    _id: string;
+    
 }
