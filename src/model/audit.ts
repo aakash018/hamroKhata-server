@@ -1,32 +1,29 @@
 import mongoose, {Schema} from "mongoose"
-import { Logs } from "src/@types/global"
+import { IAuditDatabase } from "src/@types/audit"
+
 
 const auditSchema: Schema = new Schema({
-    amount: 
-    {
-        type: Number, 
-        required: true
+    Aakash: {
+        Deekshit: { type: Number, required: true },
+        Subash: { type: Number, required: true },
+        Yaman: { type: Number, required: true }
     },
-
-    paid_By: 
-    {
-        type: String,
-        required: true
+    Deekshit: {
+        Aakash: { type: Number, required: true },
+        Subash: { type: Number, required: true },
+        Yaman: { type: Number, required: true }
     },
-
-    description: 
-    {
-        type: String,
-        required: true
+    Subash: {
+        Aakash: { type: Number, required: true },
+        Deekshit: { type: Number, required: true },
+        Yaman: { type: Number, required: true }
     },
-
-    currentTime: 
-    {
-        type: Date,
-        default: Date.now(),
-        required: true,
+    Yaman: {
+        Aakash: { type: Number, required: true },
+        Deekshit: { type: String, required: true },
+        Subash: { type: String, required: true }
     }
 
 })
 
-export default mongoose.model<Logs>("Logs",auditSchema)
+export default mongoose.model<IAuditDatabase>("Audit",auditSchema)

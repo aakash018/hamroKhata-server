@@ -18,15 +18,11 @@ const logsSchema: Schema = new Schema({
     {
         type: String,
         required: true
-    },
-
-    currentTime: 
-    {
-        type: Date,
-        default: Date.now(),
-        required: true,
     }
-
-})
+}, 
+    {
+        timestamps: true
+    }
+)
 
 export default mongoose.model<Logs>("Logs",logsSchema)

@@ -11,10 +11,6 @@ export interface Logs extends Document {
     amount: number,
     paid_By: string,
     description: string,
-    currentTime: Date
-}
-
-export interface Audit extends Document {
-    _id: string;
-    
+    createdAt: Date,
+    updatedAt: Date
 }
