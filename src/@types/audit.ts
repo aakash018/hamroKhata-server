@@ -28,7 +28,9 @@ export interface IAuditDatabase extends Document {
     Aakash: IAakash,
     Deekshit: IDeekshit,
     Subash: ISubash,
-    Yaman: IYaman
+    Yaman: IYaman,
+    createdAt?: Date,
+    updatedAt?: Date
 }
 
 export interface IAudit {

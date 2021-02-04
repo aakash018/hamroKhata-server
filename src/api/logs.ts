@@ -5,7 +5,6 @@ const route = express()
 
 route.get("/", async (req,res) => {
     const req_position: string = req.query.log_position as unknown as string
-    console.log(req_position)
     if(req_position == null){
         return res.status(500).send("Error Loding Logs!")
     } else {

@@ -2,9 +2,11 @@ import express from "express"
 import mongoose from "mongoose";
 import entry from "./api/entry";
 import logs from "./api/logs"
+import audit from "./api/audit";
 import "dotenv/config"
 
 const app = express()
+const PORT:number = 5000
 
 //Parser MiddleWare
 app.use(express.json())
@@ -26,7 +28,8 @@ mongoose.connect(
 
 app.use("/api/entry", entry)
 app.use("/api/logs", logs)
+app.use("/api/audit", audit)
 
-app.listen(5000, () => {
+app.listen(PORT, () => {
     console.log("Success")
 })
