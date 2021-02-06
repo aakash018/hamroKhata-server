@@ -3,27 +3,35 @@ import mongoose from "mongoose";
 import entry from "./api/entry";
 import logs from "./api/logs"
 import audit from "./api/audit";
-import "dotenv/config"
+import dotenv from "dotenv"
 
 const app = express()
 const PORT:number = 5000
+
+// ENV init
+dotenv.config()
 
 //Parser MiddleWare
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }));
 
 //Database INIT
-mongoose.connect(
-    "mongodb://localhost/HamroKhata(v2)",
-    { useNewUrlParser: true, useUnifiedTopology: true },
-    (e) => {
-      if (e) {
-        console.log("Problem connecting with Database");
-      } else {
-        console.log("Connected with Mongoose DB");
+if(process.env.DATABASE_URI){
+
+  mongoose.connect(
+      process.env.DATABASE_URI,
+      { useNewUrlParser: true, useUnifiedTopology: true },
+      (e) => {
+        if (e) {
+          console.log("Problem connecting with Database");
+        } else {
+          console.log("Connected with Mongoose DB");
+        }
       }
-    }
-  );
+    );
+} else {
+  console.error("Error Loading ENV variables !!! ")
+}
   
 
 app.use("/api/entry", entry)

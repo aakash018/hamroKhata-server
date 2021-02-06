@@ -108,7 +108,7 @@ export const auditCalc = async (payerName:string, amount: number) => {
         isMongooseObj = true
     }
     
-    // ? Od is removed from object to not dublicate the id in mongoose
+    // ? Id is removed from object to not dublicate the id in mongoose
 
     let object_with_no_id = prev_audits[0];
     if(prev_audits[0]["_id"] != null){
