@@ -18,7 +18,6 @@ const route = express_1.default();
 route.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const req_position = req.query.log_position;
     if (req_position == null) {
-        res.setHeader("Access-Control-Allow-Headers", "hamrokhata.netlify.app");
         return res.status(500).send("Error Loding Logs!");
     }
     else {
@@ -26,7 +25,6 @@ route.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (entries.length === 0) {
             return res.status(200).send("No Data Found");
         }
-        res.setHeader("Access-Control-Allow-Headers", "hamrokhata.netlify.app");
         return res.send(entries);
     }
 }));
