@@ -26,6 +26,7 @@ router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
         yield audit_calc_1.auditCalc(data.paid_by, data.amount);
         yield new_entry.save();
+        res.setHeader("Access-Control-Allow-Headers", "hamrokhata.netlify.app");
         res.send("Done");
     }
     catch (e) {
@@ -34,6 +35,7 @@ router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 router.get("/", (_, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = yield logs_1.default.find();
+    res.setHeader("Access-Control-Allow-Headers", "hamrokhata.netlify.app");
     res.send(data);
 }));
 exports.default = router;

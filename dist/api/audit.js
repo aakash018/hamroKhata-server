@@ -19,6 +19,7 @@ route.get("/", (_, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const prev_audits = yield audit_1.default.find().limit(1).sort({ createdAt: "desc" }).exec();
         if (prev_audits.length === 0) {
+            res.setHeader("Access-Control-Allow-Headers", "hamrokhata.netlify.app");
             return res.json({ message: "No Data Found" });
         }
         else {
@@ -27,6 +28,7 @@ route.get("/", (_, res) => __awaiter(void 0, void 0, void 0, function* () {
             delete object_with_no_id["createdAt"];
             delete object_with_no_id["updatedAt"];
             delete object_with_no_id["__v"];
+            res.setHeader("Access-Control-Allow-Headers", "hamrokhata.netlify.app");
             return res.json(object_with_no_id);
         }
     }

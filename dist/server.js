@@ -17,7 +17,7 @@ app.use(express_1.default.urlencoded({ extended: false }));
 if (process.env.DATABASE_URI) {
     mongoose_1.default.connect(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true }, (e) => {
         if (e) {
-            console.log("Problem connecting with Database");
+            console.log("Problem connecting with Database", e);
         }
         else {
             console.log("Connected with Mongoose DB");
