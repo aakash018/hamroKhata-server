@@ -19,6 +19,7 @@ router.post("/", async (req,res) => {
         
         await auditCalc(data.paid_by, data.amount)
         await new_entry.save()
+        res.setHeader("Access-Control-Allow-Headers", "hamrokhata.netlify.app")
         res.send("Done")
     } catch (e) {
         res.send(e.message)
@@ -29,6 +30,7 @@ router.post("/", async (req,res) => {
 
 router.get("/", async (_,res) => {
     const data = await Logs.find()
+    res.setHeader("Access-Control-Allow-Headers", "hamrokhata.netlify.app")
     res.send(data)
 })
 
