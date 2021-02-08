@@ -29,6 +29,9 @@ if (process.env.DATABASE_URI) {
 else {
     console.error("Error Loading ENV variables !!! ");
 }
+app.get("/", (_, res) => {
+    res.send("Server is running !");
+});
 app.use("/api/entry", entry_1.default);
 app.use("/api/logs", logs_1.default);
 app.use("/api/audit", audit_1.default);
