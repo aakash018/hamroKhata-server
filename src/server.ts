@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import entry from "./api/entry";
 import logs from "./api/logs"
 import audit from "./api/audit";
+import individual_payment from "./api/individual_payment"
 import dotenv from "dotenv"
 import cors from "cors"
 
@@ -45,6 +46,7 @@ app.get("/", (_,res) => {
 app.use("/api/entry", entry)
 app.use("/api/logs", logs)
 app.use("/api/audit", audit)
+app.use("/api/individual_payment", individual_payment)
 
 app.listen(PORT, () => {
     console.log("Success")

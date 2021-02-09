@@ -2,6 +2,7 @@ import express from "express"
 import { Entry_Payload } from "src/@types/global"
 import { auditCalc } from "../util/audit_calc"
 import Logs from "../model/logs"
+
 // import { IAuditDatabase } from "src/@types/audit"
 // import Audit from "../model/audit"
 
@@ -17,12 +18,15 @@ router.post("/", async (req,res) => {
             description: data.description,
         })
         
-        await auditCalc(data.paid_by, data.amount)
-        await new_entry.save()
-        // res.setHeader("Access-Control-Allow-Headers", "hamrokhata.netlify.app")
-        res.send("Done")
+        const audit_calc_data = await auditCalc(data.paid_by, data.amount)
+        if(audit_calc_data === "Errro with database") {
+            return res.send(audit_calc_data)
+        } else {
+            await new_entry.save()
+            return res.send("Done")
+        }
     } catch (e) {
-        res.send(e.message)
+        return res.send(e.message)
     }
 
 

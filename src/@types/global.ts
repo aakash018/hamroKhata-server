@@ -14,3 +14,10 @@ export interface Logs extends Document {
     createdAt: Date,
     updatedAt: Date
 }
+
+export interface IPayment {
+    paid_by: string,
+    paid_to: string,
+    amount: number,
+    paid_time: Date
+}
