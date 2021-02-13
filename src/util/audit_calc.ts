@@ -1,14 +1,8 @@
 import { IAudit } from "../@types/audit"
 import Audit from "../model/audit"
+import { auditCaculations } from "./auditCalculatons"
 
 
-const handleSubstract = (new_amount: number, old_amount: number) => {
-    if (new_amount <= old_amount) {
-        return old_amount - new_amount
-    } else {
-        return new_amount - old_amount
-    }
-}
 
 
 export const auditCalc = async (payerName: string, amount: number) => {
@@ -54,27 +48,21 @@ export const auditCalc = async (payerName: string, amount: number) => {
 
 
     if (isMongooseObj) {
-        for (let name_of_roomies in prev_audits[0].toJSON()) {
+        for (let name_of_paid_roomies in prev_audits[0].toJSON()) {
             const divied_amount: number = amount / total_no_of_rommies;
-            if (name_of_roomies === payerName) {
-                const payerAuditInfo: [key: number] | any = prev_audits[0][name_of_roomies]
+            if (name_of_paid_roomies === payerName) {
+                const payerAuditInfo: [key: number] | any = prev_audits[0][name_of_paid_roomies]
                 // console.log("Audit", typeof payerAuditInfo)
 
                 for (let rommie_expect_payer in payerAuditInfo.toJSON()) {
                     // ? Audit Algogrithm
-                    let prev_loan_for_payer = payerAuditInfo[rommie_expect_payer];
-                    if (divied_amount <= prev_loan_for_payer) {
-                        // ? Run if payer doesn'tpay complete lona with the resp. roomie
-                        // ? Just Sub the prev loan with recently paid amount
-                        payerAuditInfo[rommie_expect_payer] = handleSubstract(divied_amount, prev_loan_for_payer)
-                    } else {
-                        // ? Only run if payer pays complete loan to resp. rommie
-                        // ? Zero to loan paid by payer
-                        payerAuditInfo[rommie_expect_payer] = 0;
 
-                        // ? Add the remaining money to the respective rommie
-                        prev_audits[0][rommie_expect_payer][payerName] = prev_audits[0][rommie_expect_payer][payerName] + handleSubstract(divied_amount, prev_loan_for_payer)
-                    }
+                    auditCaculations(
+                        payerAuditInfo,
+                        rommie_expect_payer,
+                        prev_audits, divied_amount,
+                        payerName
+                    )
                 }
                 break;
             }
@@ -90,19 +78,13 @@ export const auditCalc = async (payerName: string, amount: number) => {
                 for (let rommie_expect_payer in payerAuditInfo) {
                     console.log("Roomie", typeof rommie_expect_payer)
                     // ! TEST
-                    let prev_loan_for_payer = payerAuditInfo[rommie_expect_payer];
-                    if (divied_amount <= prev_loan_for_payer) {
-                        // ? Run if payer doesn'tpay complete lona with the resp. roomie
-                        // ? Just Sub the prev loan with recently paid amount
-                        payerAuditInfo[rommie_expect_payer] = handleSubstract(divied_amount, prev_loan_for_payer)
-                    } else {
-                        // ? Only run if payer pays complete loan to resp. rommie
-                        // ? Zero to loan paid by payer
-                        payerAuditInfo[rommie_expect_payer] = 0;
-
-                        // ? Add the remaining money to the respective rommie
-                        prev_audits[0][rommie_expect_payer][payerName] = prev_audits[0][rommie_expect_payer][payerName] + handleSubstract(divied_amount, prev_loan_for_payer)
-                    }
+                    auditCaculations(
+                        payerAuditInfo,
+                        rommie_expect_payer,
+                        prev_audits,
+                        divied_amount,
+                        payerName
+                    )
                 }
                 break;
             }
@@ -113,7 +95,7 @@ export const auditCalc = async (payerName: string, amount: number) => {
     }
 
     // ? Id is removed from object to not dublicate the id in mongoose
-
+    console.log(prev_audits)
     let object_with_no_id = prev_audits[0];
     if (prev_audits[0]["_id"] != null) {
         object_with_no_id = prev_audits[0].toJSON();

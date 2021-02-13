@@ -15,7 +15,7 @@ export interface Logs extends Document {
     updatedAt: Date
 }
 
-export interface IPayment {
+export interface IPayment extends Document {
     paid_by: string,
     paid_to: string,
     amount: number,
