@@ -12,12 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.auditCalc = void 0;
+exports.paymentCalc = void 0;
 const audit_1 = __importDefault(require("../model/audit"));
 const auditCalculatons_1 = require("./auditCalculatons");
-const auditCalc = (payerName, amount) => __awaiter(void 0, void 0, void 0, function* () {
-    const total_no_of_rommies = 4;
-    let isMongooseObj = true;
+const paymentCalc = (payerName, paidTo, amount) => __awaiter(void 0, void 0, void 0, function* () {
     let prev_audits = [];
     try {
         prev_audits = yield audit_1.default.find().sort({ createdAt: "desc" }).limit(1).exec();
@@ -27,7 +25,6 @@ const auditCalc = (payerName, amount) => __awaiter(void 0, void 0, void 0, funct
         return ("Errro with database");
     }
     if (prev_audits.length === 0) {
-        isMongooseObj = false;
         prev_audits = [
             {
                 Aakash: {
@@ -53,33 +50,9 @@ const auditCalc = (payerName, amount) => __awaiter(void 0, void 0, void 0, funct
             }
         ];
     }
-    if (isMongooseObj) {
-        for (let name_of_paid_roomies in prev_audits[0].toJSON()) {
-            const divied_amount = amount / total_no_of_rommies;
-            if (name_of_paid_roomies === payerName) {
-                const payerAuditInfo = prev_audits[0][name_of_paid_roomies];
-                for (let rommie_expect_payer in payerAuditInfo.toJSON()) {
-                    auditCalculatons_1.auditCaculations(payerAuditInfo, rommie_expect_payer, prev_audits, divied_amount, payerName);
-                }
-                break;
-            }
-        }
-    }
-    else {
-        for (let name_of_roomies in prev_audits[0]) {
-            console.log(name_of_roomies);
-            const divied_amount = amount / total_no_of_rommies;
-            if (name_of_roomies === payerName) {
-                const payerAuditInfo = prev_audits[0][name_of_roomies];
-                for (let rommie_expect_payer in payerAuditInfo) {
-                    console.log("Roomie", typeof rommie_expect_payer);
-                    auditCalculatons_1.auditCaculations(payerAuditInfo, rommie_expect_payer, prev_audits, divied_amount, payerName);
-                }
-                break;
-            }
-        }
-        isMongooseObj = true;
-    }
+    const payerAuditInfo = prev_audits[0][payerName];
+    console.log("Audit Info", payerAuditInfo);
+    auditCalculatons_1.auditCaculations(payerAuditInfo, paidTo, prev_audits, amount, payerName);
     console.log(prev_audits);
     let object_with_no_id = prev_audits[0];
     if (prev_audits[0]["_id"] != null) {
@@ -98,5 +71,5 @@ const auditCalc = (payerName, amount) => __awaiter(void 0, void 0, void 0, funct
     }
     return prev_audits[0];
 });
-exports.auditCalc = auditCalc;
-//# sourceMappingURL=audit_calc.js.map
+exports.paymentCalc = paymentCalc;
+//# sourceMappingURL=payment_calc.js.map

@@ -24,12 +24,17 @@ router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             paid_By: data.paid_by,
             description: data.description,
         });
-        yield audit_calc_1.auditCalc(data.paid_by, data.amount);
-        yield new_entry.save();
-        res.send("Done");
+        const audit_calc_data = yield audit_calc_1.auditCalc(data.paid_by, data.amount);
+        if (audit_calc_data === "Errro with database") {
+            return res.send(audit_calc_data);
+        }
+        else {
+            yield new_entry.save();
+            return res.send("Done");
+        }
     }
     catch (e) {
-        res.send(e.message);
+        return res.send(e.message);
     }
 }));
 router.get("/", (_, res) => __awaiter(void 0, void 0, void 0, function* () {

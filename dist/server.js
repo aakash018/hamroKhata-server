@@ -8,6 +8,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const entry_1 = __importDefault(require("./api/entry"));
 const logs_1 = __importDefault(require("./api/logs"));
 const audit_1 = __importDefault(require("./api/audit"));
+const payment_1 = __importDefault(require("./api/payment"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const cors_1 = __importDefault(require("cors"));
 const app = express_1.default();
@@ -30,12 +31,13 @@ else {
     console.error("Error Loading ENV variables !!! ");
 }
 app.get("/", (_, res) => {
-    res.send("Server is running !");
+    res.send("Server is running !!!!");
 });
 app.use("/api/entry", entry_1.default);
 app.use("/api/logs", logs_1.default);
 app.use("/api/audit", audit_1.default);
+app.use("/api/payment", payment_1.default);
 app.listen(PORT, () => {
-    console.log("Success");
+    console.log("Running at", PORT);
 });
 //# sourceMappingURL=server.js.map
