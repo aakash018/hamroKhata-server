@@ -40,7 +40,7 @@ if (process.env.DATABASE_URI) {
 
 
 app.get("/", (_, res) => {
-  res.send("Server is running !")
+  res.send("Server is running !!!!")
 })
 
 app.use("/api/entry", entry)
