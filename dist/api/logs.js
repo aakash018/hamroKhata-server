@@ -28,5 +28,15 @@ route.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         return res.send(entries);
     }
 }));
+route.get("/count", (_, res) => __awaiter(void 0, void 0, void 0, function* () {
+    logs_1.default.countDocuments((e, c) => {
+        if (e) {
+            res.send(e);
+        }
+        else {
+            res.send(`${c}`);
+        }
+    });
+}));
 exports.default = route;
 //# sourceMappingURL=logs.js.map
