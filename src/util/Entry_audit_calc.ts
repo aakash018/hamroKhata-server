@@ -5,7 +5,7 @@ import { auditCaculations } from "./auditCalculatons"
 
 
 
-export const auditCalc = async (payerName: string, amount: number) => {
+export const EntryAuditCalc = async (payerName: string, amount: number) => {
     const total_no_of_rommies = 4;
 
     // ? To iterate if no collection existed and an TS object was made as it doesn't need .toJSON()
@@ -48,46 +48,33 @@ export const auditCalc = async (payerName: string, amount: number) => {
 
 
     if (isMongooseObj) {
-        for (let name_of_paid_roomies in prev_audits[0].toJSON()) {
-            const divied_amount: number = amount / total_no_of_rommies;
-            if (name_of_paid_roomies === payerName) {
-                const payerAuditInfo: [key: number] | any = prev_audits[0][name_of_paid_roomies]
-                // console.log("Audit", typeof payerAuditInfo)
+        const divied_amount: number = amount / total_no_of_rommies;
+        const payerAuditInfo: [key: number] | any = prev_audits[0][payerName]
+        // console.log("Audit", typeof payerAuditInfo)
 
-                for (let rommie_expect_payer in payerAuditInfo.toJSON()) {
-                    // ? Audit Algogrithm
+        for (let rommie_expect_payer in payerAuditInfo.toJSON()) {
+            // ? Audit Algogrithm
 
-                    auditCaculations(
-                        payerAuditInfo,
-                        rommie_expect_payer,
-                        prev_audits, divied_amount,
-                        payerName
-                    )
-                }
-                break;
-            }
+            auditCaculations(
+                payerAuditInfo,
+                rommie_expect_payer,
+                prev_audits, divied_amount,
+                payerName
+            )
         }
     } else {
-        for (let name_of_roomies in prev_audits[0]) {
-            console.log(name_of_roomies)
-            const divied_amount: number = amount / total_no_of_rommies;
-            if (name_of_roomies === payerName) {
-                const payerAuditInfo: [key: number] | any = prev_audits[0][name_of_roomies]
-                // console.log("Audit", typeof payerAuditInfo)
-
-                for (let rommie_expect_payer in payerAuditInfo) {
-                    console.log("Roomie", typeof rommie_expect_payer)
-                    // ! TEST
-                    auditCaculations(
-                        payerAuditInfo,
-                        rommie_expect_payer,
-                        prev_audits,
-                        divied_amount,
-                        payerName
-                    )
-                }
-                break;
-            }
+        const divied_amount: number = amount / total_no_of_rommies;
+        const payerAuditInfo: [key: number] | any = prev_audits[0][payerName]
+        for (let rommie_expect_payer in payerAuditInfo) {
+            console.log("Roomie", typeof rommie_expect_payer)
+            // ! TEST
+            auditCaculations(
+                payerAuditInfo,
+                rommie_expect_payer,
+                prev_audits,
+                divied_amount,
+                payerName
+            )
         }
 
         //? For Next Entry
@@ -95,7 +82,6 @@ export const auditCalc = async (payerName: string, amount: number) => {
     }
 
     // ? Id is removed from object to not dublicate the id in mongoose
-    console.log(prev_audits)
     let object_with_no_id = prev_audits[0];
     if (prev_audits[0]["_id"] != null) {
         object_with_no_id = prev_audits[0].toJSON();

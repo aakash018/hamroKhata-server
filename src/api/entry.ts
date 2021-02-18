@@ -1,40 +1,55 @@
 import express from "express"
-import { Entry_Payload } from "src/@types/global"
-import { auditCalc } from "../util/audit_calc"
+import { IEntry } from "src/@types/global"
+import { EntryAuditCalc } from "../util/Entry_audit_calc"
 import Logs from "../model/logs"
+import { FrozenAudicCalc } from "../util/frozenAuditCalc"
 
-// import { IAuditDatabase } from "src/@types/audit"
-// import Audit from "../model/audit"
 
 const router = express()
 
-router.post("/", async (req,res) => {
+router.post("/", async (req, res) => {
 
-    const data:Entry_Payload = req.body
+    const data: IEntry = req.body
     try {
+        const name_of_roomies = ["Aakash", "Deekshit", "Subash", "Yaman"]
         const new_entry = new Logs({
             amount: data.amount,
             paid_By: data.paid_by,
             description: data.description,
         })
-        
-        const audit_calc_data = await auditCalc(data.paid_by, data.amount)
-        if(audit_calc_data === "Errro with database") {
-            return res.send(audit_calc_data)
-        } else {
-            await new_entry.save()
+        await new_entry.save()
+        if (data.freeze && data.frozenRoomies) {
+
+            const unfrozenRoomies = name_of_roomies.filter(
+                roomie => (
+                    !data.frozenRoomies.some(name => name === roomie)
+                )
+            )
+
+            const audit_calc_data = await FrozenAudicCalc(data.paid_by, data.amount, unfrozenRoomies)
+
+            if (audit_calc_data === "Errro with database") {
+                return res.send(audit_calc_data)
+            }
             return res.send("Done")
+        } else {
+            const audit_calc_data = await EntryAuditCalc(data.paid_by, data.amount)
+
+            if (audit_calc_data === "Errro with database") {
+                return res.send(audit_calc_data)
+            } else {
+                return res.send("Done")
+            }
         }
+
     } catch (e) {
-        return res.send(e.message)
+        console.log(e)
+        return res.send("Error with database at entry")
     }
-
-
 })
 
-router.get("/", async (_,res) => {
+router.get("/", async (_, res) => {
     const data = await Logs.find()
-    // res.setHeader("Access-Control-Allow-Headers", "hamrokhata.netlify.app")
     res.send(data)
 })
 

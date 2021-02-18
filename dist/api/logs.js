@@ -25,13 +25,14 @@ route.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (entries.length === 0) {
             return res.status(200).send("No Data Found");
         }
+        console.log(entries.length);
         return res.send(entries);
     }
 }));
 route.get("/count", (_, res) => __awaiter(void 0, void 0, void 0, function* () {
     logs_1.default.countDocuments((e, c) => {
         if (e) {
-            res.send(e);
+            console.log(e);
         }
         else {
             res.send(`${c}`);

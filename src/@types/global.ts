@@ -1,9 +1,11 @@
 import { Document } from "mongoose"
 
-export interface Entry_Payload {
+export interface IEntry {
     amount: number,
     paid_by: string,
-    description: string
+    description: string,
+    freeze: boolean,
+    frozenRoomies: Array<string>
 }
 
 export interface Logs extends Document {

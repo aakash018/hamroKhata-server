@@ -9,14 +9,15 @@ const handleSubstract = (new_amount, old_amount) => {
         return new_amount - old_amount;
     }
 };
-const auditCaculations = (payerAuditInfo, rommie_expect_payer, prev_audits, divied_amount, payerName) => {
-    let prev_loan_for_payer = payerAuditInfo[rommie_expect_payer];
+const auditCaculations = (payerAuditInfo, paid_to, prev_audits, divied_amount, payerName) => {
+    let prev_loan_for_payer = payerAuditInfo[paid_to];
+    divied_amount = parseFloat(divied_amount.toFixed(2));
     if (divied_amount <= prev_loan_for_payer) {
-        payerAuditInfo[rommie_expect_payer] = handleSubstract(divied_amount, prev_loan_for_payer);
+        payerAuditInfo[paid_to] = handleSubstract(divied_amount, prev_loan_for_payer);
     }
     else {
-        payerAuditInfo[rommie_expect_payer] = 0;
-        prev_audits[0][rommie_expect_payer][payerName] = prev_audits[0][rommie_expect_payer][payerName] + handleSubstract(divied_amount, prev_loan_for_payer);
+        payerAuditInfo[paid_to] = 0;
+        prev_audits[0][paid_to][payerName] = prev_audits[0][paid_to][payerName] + handleSubstract(divied_amount, prev_loan_for_payer);
     }
 };
 exports.auditCaculations = auditCaculations;
