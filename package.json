@@ -5,7 +5,7 @@
   "main": "server.ts",
   "scripts": {
     "watch": "tsc -w",
-    "dev": "nodemon ./dist/index.js",
+    "dev": "nodemon ./dist/server.js",
     "devTS": "nodemon --exec ts-node ./src/server.ts",
     "start": "node ./dist/server.js"
   },
