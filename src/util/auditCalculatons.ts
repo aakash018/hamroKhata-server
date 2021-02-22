@@ -16,7 +16,7 @@ export const auditCaculations = (payerAuditInfo: any[],
     payerName: string) => {
 
     let prev_loan_for_payer = payerAuditInfo[paid_to];
-
+    console.log(typeof divied_amount)
     divied_amount = parseFloat(divied_amount.toFixed(2))
     if (divied_amount <= prev_loan_for_payer) {
         // ? Run if payer doesn'tpay complete lona with the resp. roomie

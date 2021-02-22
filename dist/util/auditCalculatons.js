@@ -11,6 +11,7 @@ const handleSubstract = (new_amount, old_amount) => {
 };
 const auditCaculations = (payerAuditInfo, paid_to, prev_audits, divied_amount, payerName) => {
     let prev_loan_for_payer = payerAuditInfo[paid_to];
+    console.log(typeof divied_amount);
     divied_amount = parseFloat(divied_amount.toFixed(2));
     if (divied_amount <= prev_loan_for_payer) {
         payerAuditInfo[paid_to] = handleSubstract(divied_amount, prev_loan_for_payer);

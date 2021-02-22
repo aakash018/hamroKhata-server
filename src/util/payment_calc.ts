@@ -40,7 +40,6 @@ export const paymentCalc = async (payerName: string, paidTo: string, amount: num
 
 
     const payerAuditInfo: [key: number] | any = prev_audits[0][payerName]
-    console.log("Audit Info", payerAuditInfo)
     auditCaculations(
         payerAuditInfo,
         paidTo,

@@ -51,7 +51,6 @@ const paymentCalc = (payerName, paidTo, amount) => __awaiter(void 0, void 0, voi
         ];
     }
     const payerAuditInfo = prev_audits[0][payerName];
-    console.log("Audit Info", payerAuditInfo);
     auditCalculatons_1.auditCaculations(payerAuditInfo, paidTo, prev_audits, amount, payerName);
     console.log(prev_audits);
     let object_with_no_id = prev_audits[0];
