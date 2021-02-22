@@ -18,6 +18,7 @@ router.post("/", async (req, res) => {
             description: data.description,
         })
         await new_entry.save()
+
         if (data.freeze && data.frozenRoomies) {
 
             const unfrozenRoomies = name_of_roomies.filter(
