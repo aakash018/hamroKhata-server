@@ -44,34 +44,42 @@ route.get("/count", (_, res) => __awaiter(void 0, void 0, void 0, function* () {
 route.delete("/delete", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.body.id;
     const date = req.body.date;
-    const logsToDelete = yield logs_1.default.find({
-        "_id": {
-            "$gte": id
-        }
-    });
-    const auditsToDelete = yield audit_1.default.find({
-        "createdAt": {
-            "$gte": date
-        }
-    });
-    const paymentsToDelete = yield payment_1.default.find({
-        "createdAt": {
-            "$gte": date
-        }
-    });
-    const listOfIdsToDelete = logsToDelete.map(logs => logs.id);
-    yield logs_1.default.deleteMany({
-        _id: listOfIdsToDelete
-    });
-    const listOfIdsToDeleteInAudit = auditsToDelete.map(audit => audit._id);
-    yield audit_1.default.deleteMany({
-        _id: listOfIdsToDeleteInAudit
-    });
-    const listOfIdsToDeleteInPayment = paymentsToDelete.map(payment => payment._id);
-    yield payment_1.default.deleteMany({
-        _id: listOfIdsToDeleteInPayment
-    });
-    res.send("Done");
+    if (id == null || date == null)
+        throw "params missing";
+    try {
+        const logsToDelete = yield logs_1.default.find({
+            "_id": {
+                "$gte": id
+            }
+        });
+        const auditsToDelete = yield audit_1.default.find({
+            "createdAt": {
+                "$gte": date
+            }
+        });
+        const paymentsToDelete = yield payment_1.default.find({
+            "createdAt": {
+                "$gte": date
+            }
+        });
+        const listOfIdsToDelete = logsToDelete.map(logs => logs.id);
+        yield logs_1.default.deleteMany({
+            _id: listOfIdsToDelete
+        });
+        const listOfIdsToDeleteInAudit = auditsToDelete.map(audit => audit._id);
+        yield audit_1.default.deleteMany({
+            _id: listOfIdsToDeleteInAudit
+        });
+        const listOfIdsToDeleteInPayment = paymentsToDelete.map(payment => payment._id);
+        yield payment_1.default.deleteMany({
+            _id: listOfIdsToDeleteInPayment
+        });
+        res.send("Done");
+    }
+    catch (e) {
+        console.log(e);
+        res.status(505).send("Error Deleting");
+    }
 }));
 route.get("/charts/month", (_, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(new Date().getMonth());

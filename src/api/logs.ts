@@ -39,40 +39,48 @@ route.delete("/delete", async (req, res) => {
     const id: string = req.body.id
     const date: Date = req.body.date
 
-    const logsToDelete: ILogs[] = await Logs.find({
-        "_id": {
-            "$gte": id
-        }
-    })
+    if (id == null || date == null) throw "params missing"
 
-    const auditsToDelete: IAudit[] = await Audit.find({
-        "createdAt": {
-            "$gte": date
-        }
-    })
+    try {
+        const logsToDelete: ILogs[] = await Logs.find({
+            "_id": {
+                "$gte": id
+            }
+        })
 
-    const paymentsToDelete: IAudit[] = await payment.find({
-        "createdAt": {
-            "$gte": date
-        }
-    })
+        const auditsToDelete: IAudit[] = await Audit.find({
+            "createdAt": {
+                "$gte": date
+            }
+        })
 
-    const listOfIdsToDelete: string[] = logsToDelete.map(logs => logs.id)
-    await Logs.deleteMany({
-        _id: listOfIdsToDelete
-    })
+        const paymentsToDelete: IAudit[] = await payment.find({
+            "createdAt": {
+                "$gte": date
+            }
+        })
 
-    const listOfIdsToDeleteInAudit: string[] = auditsToDelete.map(audit => audit._id)
-    await Audit.deleteMany({
-        _id: listOfIdsToDeleteInAudit
-    })
+        const listOfIdsToDelete: string[] = logsToDelete.map(logs => logs.id)
+        await Logs.deleteMany({
+            _id: listOfIdsToDelete
+        })
 
-    const listOfIdsToDeleteInPayment: string[] = paymentsToDelete.map(payment => payment._id)
-    await payment.deleteMany({
-        _id: listOfIdsToDeleteInPayment
-    })
+        const listOfIdsToDeleteInAudit: string[] = auditsToDelete.map(audit => audit._id)
+        await Audit.deleteMany({
+            _id: listOfIdsToDeleteInAudit
+        })
 
-    res.send("Done")
+        const listOfIdsToDeleteInPayment: string[] = paymentsToDelete.map(payment => payment._id)
+        await payment.deleteMany({
+            _id: listOfIdsToDeleteInPayment
+        })
+
+        res.send("Done")
+    } catch (e) {
+        console.log(e)
+        res.status(505).send("Error Deleting")
+    }
+
 
 })
 
