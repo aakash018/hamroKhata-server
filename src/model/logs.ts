@@ -1,28 +1,28 @@
-import mongoose, {Schema} from "mongoose"
-import { Logs } from "src/@types/global"
+import mongoose, { Schema } from "mongoose"
+import { ILogs } from "src/@types/global"
 
 const logsSchema: Schema = new Schema({
-    amount: 
+    amount:
     {
-        type: Number, 
+        type: Number,
         required: true
     },
 
-    paid_By: 
+    paid_By:
     {
         type: String,
         required: true
     },
 
-    description: 
+    description:
     {
         type: String,
         required: true
     }
-}, 
+},
     {
         timestamps: true
     }
 )
 
-export default mongoose.model<Logs>("Logs",logsSchema)
+export default mongoose.model<ILogs>("Logs", logsSchema)

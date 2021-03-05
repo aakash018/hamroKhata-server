@@ -8,7 +8,7 @@ export interface IEntry {
     frozenRoomies: Array<string>
 }
 
-export interface Logs extends Document {
+export interface ILogs extends Document {
     _id: string,
     amount: number,
     paid_By: string,

@@ -20,7 +20,7 @@ interface ISubash {
 
 interface IYaman {
     Aakash: Number,
-    Deekshit: Number, 
+    Deekshit: Number,
     Subash: Number
 }
 
@@ -34,9 +34,10 @@ export interface IAuditDatabase extends Document {
 }
 
 export interface IAudit {
-    [key: number] : any
+    [key: number]: any
     Aakash: IAakash,
     Deekshit: IDeekshit,
     Subash: ISubash,
-    Yaman: IYaman
+    Yaman: IYaman,
+    _id: string
 }

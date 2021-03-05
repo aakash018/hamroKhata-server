@@ -13,6 +13,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const payment_1 = __importDefault(require("../model/payment"));
+const audit_1 = __importDefault(require("../model/audit"));
 const logs_1 = __importDefault(require("../model/logs"));
 const route = express_1.default();
 route.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -38,6 +40,48 @@ route.get("/count", (_, res) => __awaiter(void 0, void 0, void 0, function* () {
             res.send(`${c}`);
         }
     });
+}));
+route.delete("/delete", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.body.id;
+    const date = req.body.date;
+    const logsToDelete = yield logs_1.default.find({
+        "_id": {
+            "$gte": id
+        }
+    });
+    const auditsToDelete = yield audit_1.default.find({
+        "createdAt": {
+            "$gte": date
+        }
+    });
+    const paymentsToDelete = yield payment_1.default.find({
+        "createdAt": {
+            "$gte": date
+        }
+    });
+    const listOfIdsToDelete = logsToDelete.map(logs => logs.id);
+    yield logs_1.default.deleteMany({
+        _id: listOfIdsToDelete
+    });
+    const listOfIdsToDeleteInAudit = auditsToDelete.map(audit => audit._id);
+    yield audit_1.default.deleteMany({
+        _id: listOfIdsToDeleteInAudit
+    });
+    const listOfIdsToDeleteInPayment = paymentsToDelete.map(payment => payment._id);
+    yield payment_1.default.deleteMany({
+        _id: listOfIdsToDeleteInPayment
+    });
+    res.send("Done");
+}));
+route.get("/charts/month", (_, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(new Date().getMonth());
+    const logs = yield logs_1.default.find({
+        "_id": {
+            "$lt": "603388795f0edf2d60a7678c",
+            "$eq": "603388795f0edf2d60a7678c"
+        }
+    });
+    res.send(logs);
 }));
 exports.default = route;
 //# sourceMappingURL=logs.js.map
