@@ -17,19 +17,19 @@ export const FrozenAudicCalc = async (payerName: string, amount: number, unfroze
                 Aakash: {
                     Deekshit: 0,
                     Subash: 0,
-                    Yaman: 0,
+                    Rohan: 0,
                 },
                 Deekshit: {
                     Aakash: 0,
                     Subash: 0,
-                    Yaman: 0
+                    Rohan: 0
                 },
                 Subash: {
                     Aakash: 0,
                     Deekshit: 0,
-                    Yaman: 0
+                    Rohan: 0
                 },
-                Yaman: {
+                Rohan: {
                     Aakash: 0,
                     Deekshit: 0,
                     Subash: 0
@@ -40,7 +40,7 @@ export const FrozenAudicCalc = async (payerName: string, amount: number, unfroze
 
     const divided_amount = amount / total_no_of_rommies
     const payerAuditInfo: [key: number] | any = prev_audits[0][payerName]
-
+    console.log(prev_audits)
     unfrozenRoomies.forEach(roomie => {
         auditCaculations(
             payerAuditInfo,

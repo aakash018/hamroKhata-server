@@ -11,7 +11,7 @@ router.post("/", async (req, res) => {
 
     const data: IEntry = req.body
     try {
-        const name_of_roomies = ["Aakash", "Deekshit", "Subash", "Yaman"]
+        const name_of_roomies = ["Aakash", "Deekshit", "Subash", "Rohan"]
         const new_entry = new Logs({
             amount: data.amount,
             paid_By: data.paid_by,

@@ -85,15 +85,23 @@ route.delete("/delete", async (req, res) => {
 })
 
 route.get("/charts/month", async (_, res) => {
-    console.log(new Date().getMonth())
 
-    const logs = await Logs.find({
-        "_id": {
-            "$lt": "603388795f0edf2d60a7678c",
-            "$eq": "603388795f0edf2d60a7678c"
-        }
-    })
-    res.send(logs)
+
+    for (let i = 1; i <= 12; i++) {
+
+        const logs = await Logs.find({
+            "createdAt": {
+                $gte: new Date(2021, i, 0o1),
+                $lt: new Date(2022, i, 30)
+            }
+        })
+
+        console.log(logs)
+    }
+
+
+
+    res.send("Done")
 })
 
 export default route;

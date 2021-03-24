@@ -31,19 +31,19 @@ const FrozenAudicCalc = (payerName, amount, unfrozenRoomies) => __awaiter(void 0
                 Aakash: {
                     Deekshit: 0,
                     Subash: 0,
-                    Yaman: 0,
+                    Rohan: 0,
                 },
                 Deekshit: {
                     Aakash: 0,
                     Subash: 0,
-                    Yaman: 0
+                    Rohan: 0
                 },
                 Subash: {
                     Aakash: 0,
                     Deekshit: 0,
-                    Yaman: 0
+                    Rohan: 0
                 },
-                Yaman: {
+                Rohan: {
                     Aakash: 0,
                     Deekshit: 0,
                     Subash: 0
@@ -53,6 +53,7 @@ const FrozenAudicCalc = (payerName, amount, unfrozenRoomies) => __awaiter(void 0
     }
     const divided_amount = amount / total_no_of_rommies;
     const payerAuditInfo = prev_audits[0][payerName];
+    console.log(prev_audits);
     unfrozenRoomies.forEach(roomie => {
         auditCalculatons_1.auditCaculations(payerAuditInfo, roomie, prev_audits, divided_amount, payerName);
     });

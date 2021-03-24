@@ -24,19 +24,19 @@ const auditSchema = new mongoose_1.Schema({
     Aakash: {
         Deekshit: { type: Number },
         Subash: { type: Number },
-        Yaman: { type: Number }
+        Rohan: { type: Number }
     },
     Deekshit: {
         Aakash: { type: Number },
         Subash: { type: Number },
-        Yaman: { type: Number }
+        Rohan: { type: Number }
     },
     Subash: {
         Aakash: { type: Number },
         Deekshit: { type: Number },
-        Yaman: { type: Number }
+        Rohan: { type: Number }
     },
-    Yaman: {
+    Rohan: {
         Aakash: { type: Number },
         Deekshit: { type: Number },
         Subash: { type: Number }

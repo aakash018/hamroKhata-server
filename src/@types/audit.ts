@@ -3,22 +3,22 @@ import { Document } from "mongoose"
 interface IAakash {
     Deekshit: Number,
     Subash: Number,
-    Yaman: Number
+    Rohan: Number
 }
 
 interface IDeekshit {
     Aakash: Number,
     Subash: Number,
-    Yaman: Number
+    Rohan: Number
 }
 
 interface ISubash {
     Aakash: Number,
     Deekshit: Number,
-    Yaman: Number
+    Rohan: Number
 }
 
-interface IYaman {
+interface IRohan {
     Aakash: Number,
     Deekshit: Number,
     Subash: Number
@@ -28,7 +28,7 @@ export interface IAuditDatabase extends Document {
     Aakash: IAakash,
     Deekshit: IDeekshit,
     Subash: ISubash,
-    Yaman: IYaman,
+    Rohan: IRohan,
     createdAt?: Date,
     updatedAt?: Date
 }
@@ -38,6 +38,6 @@ export interface IAudit {
     Aakash: IAakash,
     Deekshit: IDeekshit,
     Subash: ISubash,
-    Yaman: IYaman,
+    Rohan: IRohan,
     _id: string
 }

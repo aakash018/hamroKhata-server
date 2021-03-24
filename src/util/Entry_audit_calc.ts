@@ -25,19 +25,19 @@ export const EntryAuditCalc = async (payerName: string, amount: number) => {
                 Aakash: {
                     Deekshit: 0,
                     Subash: 0,
-                    Yaman: 0,
+                    Rohan: 0,
                 },
                 Deekshit: {
                     Aakash: 0,
                     Subash: 0,
-                    Yaman: 0
+                    Rohan: 0
                 },
                 Subash: {
                     Aakash: 0,
                     Deekshit: 0,
-                    Yaman: 0
+                    Rohan: 0
                 },
-                Yaman: {
+                Rohan: {
                     Aakash: 0,
                     Deekshit: 0,
                     Subash: 0

@@ -82,14 +82,16 @@ route.delete("/delete", (req, res) => __awaiter(void 0, void 0, void 0, function
     }
 }));
 route.get("/charts/month", (_, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(new Date().getMonth());
-    const logs = yield logs_1.default.find({
-        "_id": {
-            "$lt": "603388795f0edf2d60a7678c",
-            "$eq": "603388795f0edf2d60a7678c"
-        }
-    });
-    res.send(logs);
+    for (let i = 1; i <= 12; i++) {
+        const logs = yield logs_1.default.find({
+            "createdAt": {
+                $gte: new Date(2021, i, 0o1),
+                $lt: new Date(2022, i, 30)
+            }
+        });
+        console.log(logs);
+    }
+    res.send("Done");
 }));
 exports.default = route;
 //# sourceMappingURL=logs.js.map

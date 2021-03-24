@@ -20,7 +20,7 @@ const router = express_1.default();
 router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = req.body;
     try {
-        const name_of_roomies = ["Aakash", "Deekshit", "Subash", "Yaman"];
+        const name_of_roomies = ["Aakash", "Deekshit", "Subash", "Rohan"];
         const new_entry = new logs_1.default({
             amount: data.amount,
             paid_By: data.paid_by,
